@@ -33,7 +33,32 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "@firebase/app",
+              "firebase/app",
+              "@firebase/database",
+              "firebase/database",
+              "@firebase/firestore",
+              "firebase/firestore",
+              "@firebase/auth",
+              "firebase/auth",
+              "@firebase/analytics",
+              "firebase/analytics",
+              "@firebase/functions",
+              "@firebase/util",
+              "@firebase/component",
+              "@firebase/performance",
+              "@firebase/remote-config",
+              "moment",
+              "moment-timezone",
+              "hammerjs"
+            ]
           },
           "configurations": {
             "production": {
@@ -97,6 +122,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "scripts": []
           }
         },
@@ -126,6 +156,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "moomoomamoocow"
+    }
+  },
+  "defaultProject": "moomoomamoocow",
+  "cli": {
+    "analytics": "4db1466e-94f6-4ee7-9498-8e474c1c0ebd"
+  }
 }

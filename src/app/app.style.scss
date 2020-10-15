@@ -1,0 +1,51 @@
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    
+    width: 100%;
+    height: 100vh;
+    height: var(--app-height-100);
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        width: 100%;
+        height: 100vh;
+        height: var(--app-height-100);
+    }
+}
+
+.panel {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    height: 150vh;
+    // height: var(--app-height-200);
+    width: 100%;
+
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.blue {
+    background: blue;
+}
+.green {
+    background: green;
+}
+.yellow {
+    background: yellow;
+}
+.orange {
+    background: orange;
+}
+.red {
+    background: red;
+}

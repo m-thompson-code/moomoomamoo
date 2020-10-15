@@ -1,0 +1,9 @@
+<div class="mdc-touch-target-wrapper">
+    <button #button [class]="'mdc-button' + (mode ? (' mdc-button--' + mode) : '') + ' mdc-button--touch'" [disabled]="disabled" mooRipple>
+        <div class="mdc-button__ripple"></div>
+        <i *ngIf="icon" class="material-icons mdc-button__icon" aria-hidden="true">{{ icon }}</i>
+        <span *ngIf="text" class="mdc-button__label">{{ text }}</span>
+        <i *ngIf="trailingIcon" class="material-icons mdc-button__icon" aria-hidden="true">{{ trailingIcon }}</i>
+        <div class="mdc-button__touch"></div>
+    </button>
+</div>
