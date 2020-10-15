@@ -4,6 +4,8 @@ import { ScrollService } from '@app/services/scroll.service';
 import { Subscription } from 'rxjs';
 import { Visibility } from './directives/scroll-listener.directive';
 
+import * as BezierEasing from 'bezier-easing';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.template.html',
@@ -26,6 +28,8 @@ export class AppComponent {
     }
 
     public ngOnInit(): void {
+        (window as any).BezierEasing = BezierEasing;
+        
         if (!this.firebaseService.firebaseIsValid()) {
             debugger;
         }
@@ -90,7 +94,7 @@ export class AppComponent {
     }
 
     public blueTest(visibility: Visibility): void {
-        let r = visibility.topRatio - visibility.bottomRatio;
+        let r = visibility.fixedTopRatio - visibility.fixedBottomRatio;
 
         if (r < -1) {
             r = -1;
@@ -102,7 +106,7 @@ export class AppComponent {
     }
 
     public greenTest(visibility: Visibility): void {
-        let r = visibility.topRatio - visibility.bottomRatio;
+        let r = visibility.fixedTopRatio - visibility.fixedBottomRatio;
 
         if (r < -1) {
             r = -1;
@@ -114,7 +118,7 @@ export class AppComponent {
     }
 
     public yellowTest(visibility: Visibility): void {
-        let r = visibility.topRatio - visibility.bottomRatio;
+        let r = visibility.fixedTopRatio - visibility.fixedBottomRatio;
 
         if (r < -1) {
             r = -1;
@@ -126,7 +130,7 @@ export class AppComponent {
     }
 
     public orangeTest(visibility: Visibility): void {
-        let r = visibility.topRatio - visibility.bottomRatio;
+        let r = visibility.fixedTopRatio - visibility.fixedBottomRatio;
 
         if (r < -1) {
             r = -1;
@@ -138,7 +142,7 @@ export class AppComponent {
     }
 
     public redTest(visibility: Visibility): void {
-        let r = visibility.topRatio - visibility.bottomRatio;
+        let r = visibility.fixedTopRatio - visibility.fixedBottomRatio;
 
         if (r < -1) {
             r = -1;

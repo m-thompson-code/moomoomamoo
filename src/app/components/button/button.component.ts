@@ -4,7 +4,7 @@ import { MDCRipple } from '@material/ripple';
 
 // import { environment } from '@environment';
 
-type ButtonMode = 'raised' | 'unelevated' | 'outlined' | '' | null | undefined;
+type ButtonMode = 'raised' | 'unelevated' | 'outlined' | '';
 
 // source: https://material.io/develop/web/components/buttons
 
@@ -15,7 +15,7 @@ type ButtonMode = 'raised' | 'unelevated' | 'outlined' | '' | null | undefined;
 })
 export class ButtonComponent implements OnInit {
     @ViewChild('button', {static: true}) private _button!: ElementRef<HTMLInputElement>;
-    @Input() public mode?: ButtonMode = 'raised';
+    @Input() public mode: ButtonMode = 'raised';
     @Input() public disabled?: boolean = false;
     @Input() public icon?: string;
     @Input() public text?: string;

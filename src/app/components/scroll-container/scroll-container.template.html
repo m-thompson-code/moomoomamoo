@@ -1,0 +1,8 @@
+<div class="div-container" #divContainer mooScrollListener (visibilityChanged)="handleButtons($event)">
+    <ng-content></ng-content>
+
+    <div [class]="'buttons ' + buttonsClass">
+        <moo-fav-button *ngIf="showScrollToTop" (click)="scrollToTop()" class="scroll-top" size="auto" icon="vertical_align_top" [visible]="buttonsState === 'show-both' || buttonsState === 'show-scroll-up'"></moo-fav-button>
+        <moo-fav-button *ngIf="showScrollToNext" (click)="scrollToNext()" class="scroll-bottom" size="auto" icon="navigate_next" [visible]="buttonsState === 'show-both' || buttonsState === 'show-scroll-down'"></moo-fav-button>
+    </div>
+</div>

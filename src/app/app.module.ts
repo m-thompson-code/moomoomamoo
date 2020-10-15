@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ButtonModule } from './components/button';
+import { ScrollContainerModule } from './components/scroll-container';
 
 import { ServicesModule } from './services';
 
@@ -19,6 +20,7 @@ import { DirectivesModule } from './directives';
         AppRoutingModule,
 
         ButtonModule,
+        ScrollContainerModule,
 
         ServicesModule,
         

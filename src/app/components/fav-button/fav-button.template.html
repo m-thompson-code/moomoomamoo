@@ -1,0 +1,8 @@
+<div class="mdc-touch-target-wrapper">
+    <button #button [class]="'mdc-fab' + (size === 'mini' ? ' mdc-fab--mini' : (size === 'auto') ? ' auto-size' : '') + ' mdc-fab--touch' + (visible ? '' : ' mdc-fab--exited')">
+        <div class="mdc-fab__ripple"></div>
+        <span *ngIf="icon" class="material-icons mdc-fab__icon">{{ icon }}</span>
+        <span *ngIf="!icon && text" class="mdc-fab__label">{{ text }}</span>
+        <div class="mdc-fab__touch"></div>
+    </button>
+</div>

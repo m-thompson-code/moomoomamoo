@@ -1,21 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-
-// @use '@material/button/mdc-button';
-// @use '@material/button';
-
-$spacing: 32px;
-
-// Theme: https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=D32F2F&secondary.color=455A64
 $primary: #d32f2f;
 $accent: #455a64;
-$white: white;
-$error: red;
 $backgroundColor: #303030;
-
-
-// .foo-button {
-//      @include button.container-fill-color(darksalmon);
-// }
 
 @use "@material/theme" with (
   $primary: $primary,
@@ -23,6 +9,22 @@ $backgroundColor: #303030;
   $background: $backgroundColor,
 );
 @use "material-components-web";
+
+@import 'styles/material-components-overrides.scss';
+@import 'styles/variables.scss';
+
+
+// @use '@material/button/mdc-button';
+// @use '@material/button';
+
+
+
+
+// .foo-button {
+//      @include button.container-fill-color(darksalmon);
+// }
+
+
 
 // /* You can add global styles to this file, and also import other style files */
 // @import 'styles/theme.scss';

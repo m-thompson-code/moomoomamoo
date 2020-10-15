@@ -28,18 +28,32 @@
     <div class="overlay red" [style.transform]="red"></div>
 </div>
 
-<div class="panel" mooScrollListener (visibilityChanged)="blueTest($event)" #c="customdirective">
-blue <a (click)="c.scrollToTop()">TOP</a> <a (click)="c.scrollToBottom()">BOTTOM</a>
-</div>
-<div class="panel" mooScrollListener (visibilityChanged)="greenTest($event)" #c2="customdirective">
-green <a (click)="c2.scrollToTop()">TOP</a> <a (click)="c2.scrollToBottom()">BOTTOM</a>
-</div>
-<div class="panel" mooScrollListener (visibilityChanged)="yellowTest($event)" #c3="customdirective">
-yellow <a (click)="c3.scrollToTop()">TOP</a> <a (click)="c3.scrollToBottom()">BOTTOM</a>
-</div>
-<div class="panel" mooScrollListener (visibilityChanged)="orangeTest($event)" #c4="customdirective">
-orange <a (click)="c4.scrollToTop()">TOP</a> <a (click)="c4.scrollToBottom()">BOTTOM</a>
-</div>
-<div class="panel" mooScrollListener (visibilityChanged)="redTest($event)" #c5="customdirective">
-red <a (click)="c5.scrollToTop()">TOP</a> <a (click)="c5.scrollToBottom()">BOTTOM</a>
-</div>
+<moo-scroll-container [showScrollToNext]="true">
+    <div class="panel" mooScrollListener (visibilityChanged)="blueTest($event)">
+        blue
+    </div>
+</moo-scroll-container>
+
+<moo-scroll-container [showScrollToNext]="true">
+    <div class="panel" mooScrollListener (visibilityChanged)="greenTest($event)">
+        green
+    </div>
+</moo-scroll-container>
+
+<moo-scroll-container [showScrollToNext]="true">
+    <div class="panel" mooScrollListener (visibilityChanged)="yellowTest($event)">
+    yellow
+    </div>
+</moo-scroll-container>
+
+<moo-scroll-container [showScrollToNext]="true">
+    <div class="panel" mooScrollListener (visibilityChanged)="orangeTest($event)">
+    orange
+    </div>
+</moo-scroll-container>
+
+<moo-scroll-container [showScrollToNext]="false">
+    <div class="panel" mooScrollListener (visibilityChanged)="redTest($event)">
+    red
+    </div>
+</moo-scroll-container>

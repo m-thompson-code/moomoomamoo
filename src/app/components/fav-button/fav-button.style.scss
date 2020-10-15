@@ -1,0 +1,14 @@
+@use "@material/fab";
+
+@import 'styles/variables.scss';
+
+@include fab.core-styles;
+
+.auto-size {
+    width: $smallFavButtonLength;
+    height: $smallFavButtonLength;
+}
+
+.mdc-fab--exited {
+
+}

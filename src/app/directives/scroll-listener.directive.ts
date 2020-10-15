@@ -7,6 +7,9 @@ import { ScrollService } from '@app/services/scroll.service';
 export interface Visibility {
     topRatio: number;
     bottomRatio: number;
+    fixedTopRatio: number;
+    fixedBottomRatio: number;
+    visibile: boolean;
 }
 
 @Directive({
@@ -54,87 +57,42 @@ export class ScrollListenerDirective implements OnInit {
 
         // Ending position of element on document
         const _rY2 = _rY + height;
-
-        // console.log(posY, relativeY, _rY, _rY2);
-
-        // const _topVisibility = 1 - (_rY - posY) / windowHeight;
-        // const _bottomVisibility = (_rY2 - posY) / windowHeight;
             
-        let topVisibilityRatio = 1 - (_rY - posY) / windowHeight;
-        let bottomVisibilityRatio = (_rY2 - posY) / windowHeight;
+        const topVisibilityRatio = 1 - (_rY - posY) / windowHeight;
+        const bottomVisibilityRatio = (_rY2 - posY) / windowHeight;
 
-        if (topVisibilityRatio > 1) {
-            topVisibilityRatio = 1;
-        } else if (topVisibilityRatio < 0) {
-            topVisibilityRatio = 0;
+        let fixedTopVisibilityRatio = topVisibilityRatio;
+        let fixedBottomVisibilityRatio = bottomVisibilityRatio;
+
+        if (fixedTopVisibilityRatio > 1) {
+            fixedTopVisibilityRatio = 1;
+        } else if (fixedTopVisibilityRatio < 0) {
+            fixedTopVisibilityRatio = 0;
         }
 
-        if (bottomVisibilityRatio > 1) {
-            bottomVisibilityRatio = 1;
-        } else if (bottomVisibilityRatio < 0) {
-            bottomVisibilityRatio = 0;
+        if (fixedBottomVisibilityRatio > 1) {
+            fixedBottomVisibilityRatio = 1;
+        } else if (fixedBottomVisibilityRatio < 0) {
+            fixedBottomVisibilityRatio = 0;
         }
 
-        // console.log(_topVisibility, _bottomVisibility);
-        console.log(topVisibilityRatio, bottomVisibilityRatio);
+        let visible = true;
 
-        // let topVisibility = 'not-visibile';
-        // let bottomVisibility = 'not-visibile';
-        // let visible = false;
+        if (topVisibilityRatio < 0 || bottomVisibilityRatio < 0) {
+            visible = false;
+        }
 
         this.visibilityChanged.emit({
             topRatio: topVisibilityRatio,
             bottomRatio: bottomVisibilityRatio,
+            fixedTopRatio: fixedTopVisibilityRatio,
+            fixedBottomRatio: fixedBottomVisibilityRatio,
+            visibile: visible,
         });
-
-        // if (_topVisibility === 1 && _bottomVisibility === 1) {
-        //     console.log("middle");
-        // } else if (_topVisibility > 0 && _bottomVisibility)
-
-        // if (posY < _rY) {
-        //     if (_topVisibility >= 1) {
-        //         console.log("fully visible from top");
-        //         visible = true;
-        //         topVisibility = 'fully-visible';
-        //     } else if (_topVisibility > 0) {
-        //         console.log("partcially visible from top");
-        //         visible = true;
-        //         topVisibility = 'partcial';
-        //     } else {
-        //         console.log("Not visibile from top yet");
-        //         visible = false;
-        //         topVisibility = 'not-visibile';
-        //     }
-        // } else if (posY > _rY2) {
-        //     console.log("scrolled pass");
-        //     visible = false;
-        // } else {
-        //     if (_bottomVisibility >= 1) {
-        //         console.log("fully visible from bottom (middle)");
-        //         visible = true;
-        //         topVisibility = 'fully-visible';
-        //     } else if (_bottomVisibility > 0) {
-        //         console.log("partcially visible from bottom");
-        //         visible = true;
-        //         bottomVisibility = 'partcial';
-        //     } else {
-        //         console.log("Not visibile from bottom yet");
-        //         visible = false;
-        //         bottomVisibility = 'not-visibile';
-        //     }
-
-        //     if (_bottomVisibility >= 1) {
-        //         console.log("middle");
-        //         visible = true;
-        //     } else {
-        //         console.log("partically visible from the bottom");
-        //         visible = true;
-        //     }
-        // }
     }
 
     public scrollToTop() {
-        console.log(this.element);
+        // console.log(this.element);
 
         const e = this.element.nativeElement;
 
@@ -159,7 +117,7 @@ export class ScrollListenerDirective implements OnInit {
     public scrollToBottom() {
         const windowHeight = window.innerHeight;
 
-        console.log(this.element);
+        // console.log(this.element);
 
         const e = this.element.nativeElement;
 
