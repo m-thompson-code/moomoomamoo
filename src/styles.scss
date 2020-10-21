@@ -1,18 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 $primary: #d32f2f;
 $accent: #455a64;
-$backgroundColor: #303030;
+$backgroundColor: #121212;//#303030;
+$error: #CF6679;
 
 @use "@material/theme" with (
-  $primary: $primary,
-  $secondary: $accent,
-  $background: $backgroundColor,
+    $primary: $primary,
+    $secondary: $accent,
+    $background: $backgroundColor,
 );
 @use "material-components-web";
 
-@import 'styles/material-components-overrides.scss';
+// @import 'styles/material-components-overrides.scss';
 @import 'styles/variables.scss';
-
+@import 'styles/layout.scss';
+@import 'styles/dark-theme.scss';
 
 // @use '@material/button/mdc-button';
 // @use '@material/button';
@@ -59,6 +61,7 @@ html, body {
     min-height: var(--app-height-100);
 
     background: $backgroundColor;
+    color: white;
 }
 
 // // source: https://css-tricks.com/snippets/jquery/smooth-scrolling/
@@ -78,6 +81,8 @@ body {
     // font-family: Roboto, "Helvetica Neue", sans-serif;
 
     font: 400 16px/22px Roboto, "Helvetica Neue", sans-serif;
+
+    @include dark-theme();
 }
 
 // source: https://bugs.webkit.org/show_bug.cgi?id=153852 (Kareem Darkazanli 2020-04-01 19:37:31 PDT)

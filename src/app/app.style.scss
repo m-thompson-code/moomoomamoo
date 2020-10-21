@@ -1,3 +1,36 @@
+@import 'styles/variables.scss';
+
+/*
+    Reference to how mdc-drawer--dismissible works (mdc-drawer--open)
+
+    .mdc-drawer-app-content gain the following styles:
+    
+    .mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing) + .mdc-drawer-app-content {
+        margin-left: 256px;
+        margin-right: 0;
+    }
+
+    When the navigation-drawer is closed:
+
+    .mdc-drawer-app-content {
+        margin-left: 0;
+        margin-right: 0;
+        position: relative;
+    }
+*/
+
+moo-top-app-bar.on-desktop {
+    z-index: 10;
+}
+
+.main {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    z-index: 0;
+}
+
 .background {
     position: fixed;
     top: 0;
@@ -17,6 +50,46 @@
         height: 100vh;
         height: var(--app-height-100);
     }
+}
+
+.about-me {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: row;
+
+    background: $backgroundColor;
+
+    .horizontal-headshot {
+        height: auto;
+        width: auto;
+    
+        border-radius: 4px;
+
+        margin-right: $spacing/2;
+    }
+
+    .info {
+        .header {
+            display: flex;
+            align-items: center;
+    
+            i {
+                margin-right: $spacing/2;
+            }
+    
+            margin-bottom: $spacing/2;
+        }
+        div.header:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.row-1 {
+    margin-right: $spacing;
 }
 
 .panel {
@@ -48,4 +121,27 @@
 }
 .red {
     background: red;
+}
+
+.vertical-headshot {
+    display: none;
+}
+
+@media only screen and (max-width: $mobile_width) and (orientation: portrait) {
+    .about-me {
+        display: flex;
+        flex-direction: column;
+
+        .horizontal-headshot {
+            display: none;
+        }
+
+        .vertical-headshot {
+            display: block;
+
+            width: 100%;
+
+            margin-bottom: $spacing/2;
+        }
+    }
 }

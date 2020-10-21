@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, AfterViewInit, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Directive, ElementRef, HostListener, AfterViewInit, Input, OnInit, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 
 // import { debounce } from '@app/decorators/debounce';
 
@@ -91,7 +91,7 @@ export class KeepRatioDirective implements OnInit, AfterViewInit {
     private _h?: number;
     private _w?: number;
 
-    constructor(private element: ElementRef) {
+    constructor(private element: ElementRef, private changeDetectorRef: ChangeDetectorRef) {
         this._basedOnHeight = false;
         this._basedOnWidth = false;
 
@@ -129,6 +129,7 @@ export class KeepRatioDirective implements OnInit, AfterViewInit {
 
     public ngAfterViewInit(): void {
         this._maintainRatio(this.element.nativeElement);
+        this.changeDetectorRef.detectChanges();
 
         // Safari/desktop doesn't handle this well on AfterViewInit, so we'll debouncing it and trying again
         // Safari issue on delivery/product: bottle and design will likely have the wrong width (fixes when you resize window)

@@ -1,0 +1,31 @@
+@import 'styles/variables.scss';
+
+// $text__high-emphasis: rgba(white, .87);
+// $text__medium-emphasis: rgba(white, .60);
+// $text__disabled-emphasis: rgba(white, .38);
+
+@mixin dark-theme-list-divider {
+    border-bottom-color: white;
+}
+
+@mixin dark-theme-navigation-drawer {
+    .mdc-drawer {
+        background-color: $backgroundColor;
+        color: white;
+
+        .mdc-list-item__text, i, .mdc-list-group__subheader {
+            color: white;
+        }
+    
+        .mdc-list-item__graphic {
+            color: rgba($text__high-emphasis, .6);
+        }
+        
+        @include dark-theme-list-divider();
+
+    }
+}
+
+@mixin dark-theme() {
+    @include dark-theme-navigation-drawer();
+}

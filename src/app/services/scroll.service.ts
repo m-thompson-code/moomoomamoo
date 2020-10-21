@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2 } from '@angular/core';
 
 import { interval, Observable, Subject } from 'rxjs';
 import { throttle } from 'rxjs/operators';
@@ -17,10 +17,17 @@ export class ScrollService {
     public observable: Observable<number>;
 
     private _onscroll: (event: Event) => void;
+    private _detachListeners?: () => void;
 
     private bezierEasing: BezierEasing.EasingFunction;
 
+    public lockedScroll: boolean = false;
+
+    private renderer?: Renderer2;
+
     constructor() {
+        this.posY = this.getScrollPosition();
+
         this._subject = new Subject<number>();
 
         // Throttle scroll change (first emit is instant, but the trailing emits are delayed by DELAY_TIMER)
@@ -30,16 +37,16 @@ export class ScrollService {
             leading: true, trailing: true,
         }));
 
-        this._onscroll = this._getOnscroll();
+        this._onscroll = () => {
+            this._getOnscroll();
+        }
 
         this.bezierEasing = BezierEasing(0.25, 0.8, 0.25, 1);
     }
 
-    private _getOnscroll(): (event: Event) => void {
-        return (event: Event) => {
-            this.posY = this.getScrollPosition();
-            this._subject.next(this.posY);
-        };
+    private _getOnscroll(): void {
+        this.posY = this.getScrollPosition();
+        this._subject.next(this.posY);
     }
 
     private getScrollPosition(): number {
@@ -77,15 +84,59 @@ export class ScrollService {
         }, frame);
     }
 
-    public init(): void {
-        window.addEventListener('scroll', this._onscroll, false);
-        window.addEventListener('resize', this._onscroll, false);
-        window.addEventListener('orientationchange', this._onscroll, false);
+    public init(renderer: Renderer2): void {
+        this.detach();
+        this.renderer = renderer;
+
+        const _off__scroll = renderer.listen('window', 'scroll', this._onscroll);
+        const _off__resize = renderer.listen('window', 'resize', this._onscroll);
+        const _off__orientationchange = renderer.listen('window', 'orientationchange', this._onscroll);
+
+        this._detachListeners = () => {
+            _off__scroll();
+            _off__resize();
+            _off__orientationchange();
+        };
     }
 
     public detach(): void {
-        window.removeEventListener('scroll', this._onscroll);
-        window.removeEventListener('resize', this._onscroll, false);
-        window.removeEventListener('orientationchange', this._onscroll, false);
+        this._detachListeners && this._detachListeners();
+    }
+
+    public lockScroll(): void {
+        if (this.lockedScroll) {
+            return;
+        }
+
+        this.lockedScroll = true;
+
+        if (!this.renderer) {
+            debugger;
+            throw new Error("Unexpected missing renderer");
+        }
+
+        const offsetY = window.pageYOffset;
+        this.renderer.addClass(document.body, 'js-lock-position');
+        this.renderer.setStyle(document.body, 'top', `${-offsetY}px`);
+    }
+
+    public unlockScroll(): void {
+        if (!this.lockedScroll) {
+            return;
+        }
+
+        this.lockedScroll = false;
+
+        
+        if (!this.renderer) {
+            debugger;
+            throw new Error("Unexpected missing renderer");
+        }
+
+        const offsetY = Math.abs(parseInt(document.body.style.top || "0", 10));
+        this.renderer.removeClass(document.body, 'js-lock-position');
+        this.renderer.setStyle(document.body, 'top', `${-offsetY}px`);
+        this.renderer.removeStyle(document.body, 'top');
+        window.scrollTo(0, offsetY || 0);
     }
 }

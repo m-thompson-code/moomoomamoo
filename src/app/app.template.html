@@ -20,40 +20,65 @@
     <span class="mdc-button__label">Contained Button plus Icon</span>
 </button> -->
 
-<div class="background">
-    <div class="overlay blue" [style.transform]="blue"></div>
-    <div class="overlay green" [style.transform]="green"></div>
-    <div class="overlay yellow" [style.transform]="yellow"></div>
-    <div class="overlay orange" [style.transform]="orange"></div>
-    <div class="overlay red" [style.transform]="red"></div>
+<moo-top-app-bar [class]="onDesktop ? 'on-desktop' : 'not-on-desktop'"></moo-top-app-bar>
+
+<moo-navigation-drawer #navigationDrawer></moo-navigation-drawer>
+
+<div class="main mdc-drawer-app-content">
+    <div class="background">
+        <div class="overlay about-me" [style.transform]="blue"></div>
+        <div class="overlay green" [style.transform]="green"></div>
+        <div class="overlay yellow" [style.transform]="yellow"></div>
+        <div class="overlay orange" [style.transform]="orange"></div>
+        <div class="overlay red" [style.transform]="red"></div>
+    </div>
+    
+    <moo-scroll-container [showScrollToNext]="true">
+        <div class="layout-container article-padding min-height-100vh" mooScrollListener (visibilityChanged)="aboutMeHandler($event)">
+            <div class="about-me">
+                <img class="horizontal-headshot" src="/assets/images/mark_thompson_headshot.jpg" mooMatchHeightDirective [matchHeightElement]="info">
+    
+                <img class="vertical-headshot" src="/assets/images/mark_thompson_headshot.jpg">
+    
+                <div class="info" #info>
+                    <div class="header">
+                        <i class="material-icons">person</i>Mark Thompson, 30
+                    </div>
+                    <div class="header">
+                        <i class="material-icons">work</i>Full stack web and mobile developer
+                    </div>
+                    <div class="header">
+                        <i class="material-icons">location_on</i>Los Angeles, CA
+                    </div>
+                    <div class="header">
+                        <i class="material-icons">email</i>m.thompson.code@gmail.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </moo-scroll-container>
+    
+    <moo-scroll-container [showScrollToNext]="true">
+        <div class="panel" mooScrollListener (visibilityChanged)="greenTest($event)">
+            green
+        </div>
+    </moo-scroll-container>
+    
+    <moo-scroll-container [showScrollToNext]="true">
+        <div class="panel" mooScrollListener (visibilityChanged)="yellowTest($event)">
+        yellow
+        </div>
+    </moo-scroll-container>
+    
+    <moo-scroll-container [showScrollToNext]="true">
+        <div class="panel" mooScrollListener (visibilityChanged)="orangeTest($event)">
+        orange
+        </div>
+    </moo-scroll-container>
+    
+    <moo-scroll-container [showScrollToNext]="false">
+        <div class="panel" mooScrollListener (visibilityChanged)="redTest($event)">
+        red
+        </div>
+    </moo-scroll-container>    
 </div>
-
-<moo-scroll-container [showScrollToNext]="true">
-    <div class="panel" mooScrollListener (visibilityChanged)="blueTest($event)">
-        blue
-    </div>
-</moo-scroll-container>
-
-<moo-scroll-container [showScrollToNext]="true">
-    <div class="panel" mooScrollListener (visibilityChanged)="greenTest($event)">
-        green
-    </div>
-</moo-scroll-container>
-
-<moo-scroll-container [showScrollToNext]="true">
-    <div class="panel" mooScrollListener (visibilityChanged)="yellowTest($event)">
-    yellow
-    </div>
-</moo-scroll-container>
-
-<moo-scroll-container [showScrollToNext]="true">
-    <div class="panel" mooScrollListener (visibilityChanged)="orangeTest($event)">
-    orange
-    </div>
-</moo-scroll-container>
-
-<moo-scroll-container [showScrollToNext]="false">
-    <div class="panel" mooScrollListener (visibilityChanged)="redTest($event)">
-    red
-    </div>
-</moo-scroll-container>

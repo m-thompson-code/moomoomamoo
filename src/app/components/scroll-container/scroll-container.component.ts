@@ -22,7 +22,7 @@ export class ScrollContainerComponent {
     }
 
     public handleButtons(visiblity: Visibility): void {
-        console.log(visiblity);
+        // console.log(visiblity);
 
         if (!visiblity.visibile) {
             this.buttonsState = 'show-none';
@@ -47,7 +47,7 @@ export class ScrollContainerComponent {
     }
 
     public scrollToTop() {
-        console.log(this._divContainer);
+        // console.log(this._divContainer);
 
         const e = this._divContainer.nativeElement;
 
@@ -72,7 +72,7 @@ export class ScrollContainerComponent {
     public scrollToNext() {
         const windowHeight = window.innerHeight;
 
-        console.log(this._divContainer);
+        // console.log(this._divContainer);
 
         const e = this._divContainer.nativeElement;
 

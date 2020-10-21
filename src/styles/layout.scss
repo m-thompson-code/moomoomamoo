@@ -1,0 +1,73 @@
+@import 'styles/variables';
+
+@mixin layout-container-styles($horizontalMarginWidth) {
+    .layout-container {
+        width: 100%;
+        
+        padding-left: $horizontalMarginWidth;
+        padding-right: $horizontalMarginWidth;
+
+        box-sizing: border-box;
+    }
+}
+
+.article-padding {
+    padding-top: 100px;
+    padding-bottom: 120px;
+
+    box-sizing: border-box;
+}
+
+.height-100vh {
+    height: 100vh;
+    height: var(--app-height-100);
+}
+
+.min-height-100vh {
+    min-height: 100vh;
+    min-height: var(--app-height-100);
+}
+
+.header {
+    font-size: 36px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+@include layout-container-styles($desktop4kHorizontalMarginWidth);
+
+@media only screen and (max-width: $desktop_width) {
+    @include layout-container-styles($desktopHorizontalMarginWidth);
+}
+
+@media only screen and (max-width: $tablet_width) and (orientation: portrait) {
+    @include layout-container-styles($tabletHorizontalMarginWidth);
+
+    .header {
+        font-size: 36px * .8;
+    }
+}
+
+@media only screen and (max-width: $mobile_width) and (orientation: portrait) {
+    @include layout-container-styles($mobileHorizontalMarginWidth);
+    
+    .header {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: $landscape_width) and (max-height: $tablet_height) and (orientation: landscape) {
+    @include layout-container-styles($tabletHorizontalMarginWidth);
+    
+    .header {
+        font-size: 36px * .8;
+    }
+}
+
+@media only screen and (max-width: $landscape_width) and (max-height: $mobile_height) and (orientation: landscape) {
+    @include layout-container-styles($mobileHorizontalMarginWidth);
+        
+    .header {
+        font-size: 18px;
+    }
+}

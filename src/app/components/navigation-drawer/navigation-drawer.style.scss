@@ -1,0 +1,99 @@
+// @use "@material/drawer";
+// @use "@material/list";
+
+// @include drawer.core-styles;
+// @include drawer.dismissible-core-styles;
+// @include drawer.modal-core-styles;
+// @include list.core-styles;
+
+@import 'styles/variables.scss';
+@import 'styles/dark-theme.scss';
+
+:host {
+    display: block;
+    height: 100vh;
+    height: var(--app-height-100);
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    z-index: 2;
+
+    overflow: auto;
+}
+
+// Based on the spacing of the top-app-bar (so the menu buttons match)
+.mdc-drawer__header {
+    display: flex;
+    align-items: center;
+
+    padding: 8px 12px;
+}
+
+.mdc-drawer {
+    position: fixed;
+}
+
+.mdc-drawer.box-shadow {
+    // Taken from the mdc-drawer--modal class as reference
+    box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+}
+
+// Normally scrim has background color only when using the mdc-drawer--modal, but we're mixing
+.mdc-drawer-scrim {
+    background-color: rgba(0, 0, 0, 0.32);
+}
+
+@include dark-theme-navigation-drawer();
+
+// @mixin use-dismissible-navigation-drawer() {
+//     .mdc-drawer--dismissible.mdc-drawer--open {
+//         display: flex;
+//     }
+//     .mdc-drawer--modal.mdc-drawer--open {
+//         display: none;
+//     }
+//     .mdc-drawer-scrim {
+//         display: none;
+//     }
+// }
+
+// @mixin use-modal-navigation-drawer() {
+//     .mdc-drawer--dismissible.mdc-drawer--open {
+//         display: none;
+//     }
+//     .mdc-drawer--modal.mdc-drawer--open {
+//         display: flex;
+//     }
+//     .mdc-drawer--open + .mdc-drawer-scrim {
+//         display: block;
+//     }
+// }
+
+// @include use-dismissible-navigation-drawer();
+
+// @media only screen and (max-width: $desktop_width) {
+//     @include use-dismissible-navigation-drawer();
+// }
+
+// @media only screen and (max-width: $tablet_width) and (orientation: portrait) {
+//     @include use-modal-navigation-drawer();
+// }
+
+// @media only screen and (max-width: $mobile_width) and (orientation: portrait) {
+//     @include use-modal-navigation-drawer();
+// }
+
+// @media only screen and (max-width: $landscape_width) and (max-height: $tablet_height) and (orientation: landscape) {
+//     @include use-modal-navigation-drawer();
+// }
+
+// @media only screen and (max-width: $landscape_width) and (max-height: $mobile_height) and (orientation: landscape) {
+//     @include use-modal-navigation-drawer();
+// }
+
+// Only use the scrim when using the modal styles, if not, keep display: none
+// .mdc-drawer--open:not(.mdc-drawer--modal) + .mdc-drawer-scrim {
+//     display: none;
+// }

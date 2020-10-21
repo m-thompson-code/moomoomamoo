@@ -1,19 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FirebaseService } from '@app/services/firebase.service';
 import { ScrollService } from '@app/services/scroll.service';
 import { Subscription } from 'rxjs';
-import { Visibility } from './directives/scroll-listener.directive';
 
-import * as BezierEasing from 'bezier-easing';
+// import * as BezierEasing from 'bezier-easing';
+
+import { NavigationDrawerComponent } from '@app/components/navigation-drawer/navigation-drawer.component';
+
+import { NavigationDrawerService } from '@app/services/navigation-drawer.service';
+import { ResponsiveService } from '@app/services/responsive.service';
+
+import { Visibility } from '@app/directives/scroll-listener.directive';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.template.html',
     styleUrls: ['./app.style.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+    @ViewChild('navigationDrawer', {static: true}) private _navigationDrawer!: NavigationDrawerComponent;
+
+    private responsiveObserver?: Subscription;
     private scrollObserver?: Subscription;
     private _onresize?: () => void;
+    private _detachListeners?: () => void;
 
     public initalized: boolean = false;
 
@@ -23,28 +33,36 @@ export class AppComponent {
     public orange: string = '';
     public red: string = '';
 
-    constructor(private firebaseService: FirebaseService, private scrollService: ScrollService) {
+    public onDesktop: boolean = true;
+
+    constructor(private renderer: Renderer2, 
+        private firebaseService: FirebaseService, private scrollService: ScrollService, 
+        private navigationDrawerService: NavigationDrawerService, private responsiveService: ResponsiveService) {
         
     }
 
     public ngOnInit(): void {
-        (window as any).BezierEasing = BezierEasing;
+        this.blue = '';
+        this.green = '';
+        this.yellow = '';
+        this.orange = '';
+        this.red = '';
         
         if (!this.firebaseService.firebaseIsValid()) {
             debugger;
         }
 
-        this.scrollService.init();
+        this.responsiveService.init(this.renderer);
+        this.scrollService.init(this.renderer);
+        this.navigationDrawerService.init(this._navigationDrawer);
+
+        this.responsiveObserver = this.responsiveService.observable.subscribe(value => {
+            // console.log('APP', value);
+        });
 
         this.scrollObserver = this.scrollService.observable.subscribe(value => {
             // console.log('APP', value);
         });
-    }
-
-    public ngAfterViewInit(): void {
-        const updateResponsiveService = () => {
-            // this.responsiveService.responsiveMetadata = this.responsiveService.getResponsiveType();
-        }
         
         // Handle getting screen height css variables
         const appHeight = () => {
@@ -66,12 +84,16 @@ export class AppComponent {
 
         this._onresize = () => {
             appHeight();
-            updateResponsiveService();
         };
 
-        window.addEventListener('resize', this._onresize);
-        window.addEventListener('orientationchange', this._onresize);
+        const _off__resize = this.renderer.listen('window', 'resize', this._onresize);
+        const _off__orientationchange = this.renderer.listen('window', 'orientationchange', this._onresize);
         
+        this._detachListeners = () => {
+            _off__resize();
+            _off__orientationchange();
+        }
+
         appHeight();
 
         // // Listten to navigation for analytics
@@ -93,7 +115,9 @@ export class AppComponent {
         });
     }
 
-    public blueTest(visibility: Visibility): void {
+    public aboutMeHandler(visibility: Visibility): void {
+        // console.log(visibility);
+
         let r = visibility.fixedTopRatio - visibility.fixedBottomRatio;
 
         if (r < -1) {
@@ -103,6 +127,7 @@ export class AppComponent {
         }
         
         this.blue = `translateX(${r * 100}%)`;
+        // console.log(this.blue);
     }
 
     public greenTest(visibility: Visibility): void {
@@ -153,11 +178,11 @@ export class AppComponent {
         this.red = `translateX(${r * 100}%)`;
     }
 
-    public onDestroy(): void {
-        if (this._onresize) {
-            window.removeEventListener('resize', this._onresize);
-            window.removeEventListener('orientationchange', this._onresize);
-        }
+    public ngOnDestroy(): void {
+        this._detachListeners && this._detachListeners();
+
+        this.responsiveService.detach();
+        this.responsiveObserver?.unsubscribe();
 
         this.scrollService.detach();
         this.scrollObserver?.unsubscribe();

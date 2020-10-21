@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 
 import { ButtonModule } from './components/button';
 import { ScrollContainerModule } from './components/scroll-container';
+import { TopAppBarModule } from './components/top-app-bar';
+import { NavigationDrawerModule } from './components/navigation-drawer';
 
 import { ServicesModule } from './services';
 
@@ -21,6 +23,8 @@ import { DirectivesModule } from './directives';
 
         ButtonModule,
         ScrollContainerModule,
+        TopAppBarModule,
+        NavigationDrawerModule,
 
         ServicesModule,
         

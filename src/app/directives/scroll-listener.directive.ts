@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -17,22 +17,24 @@ export interface Visibility {
     exportAs:'customdirective'   //the name of the variable to access the directive
 })
 export class ScrollListenerDirective implements OnInit {
-    private scrollObserver?: Subscription;
-    @Output() visibilityChanged: EventEmitter<Visibility> = new EventEmitter();
+    private _scrollObserver?: Subscription;
+    @Output() public visibilityChanged: EventEmitter<Visibility> = new EventEmitter();
 
-    constructor(private scrollService: ScrollService, private element: ElementRef<HTMLElement>) {
+    constructor(private element: ElementRef<HTMLElement>, private changeDetectorRef: ChangeDetectorRef, private scrollService: ScrollService) {
     }
 
     public ngOnInit(): void {
         this._handlePosY(this.scrollService.posY);
+        this.changeDetectorRef.detectChanges();
 
-        this.scrollObserver = this.scrollService.observable.subscribe(posY => {
+        this._scrollObserver = this.scrollService.observable.subscribe(posY => {
             this._handlePosY(posY);
         });
     }
 
     public ngAfterViewInit(): void {
         this._handlePosY(this.scrollService.posY);
+        this.changeDetectorRef.markForCheck();
     }
 
     private _handlePosY(posY: number): void {
@@ -140,6 +142,6 @@ export class ScrollListenerDirective implements OnInit {
     }
 
     public ngOnDestroy(): void {
-        this.scrollObserver?.unsubscribe();
+        this._scrollObserver?.unsubscribe();
     }
 }
